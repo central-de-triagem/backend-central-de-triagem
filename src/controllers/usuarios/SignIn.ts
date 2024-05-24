@@ -21,8 +21,8 @@ export const signInValidation = validation((getSchema) => ({
 export const signIn = async (req: Request<{}, {}, IBodyProps>, res: Response) => {
   const { matricula, senha } = req.body;
 
-  const usuario = await UsuariosProvider.getByMatricula(matricula);
-  if (usuario instanceof Error || usuario.status === 0) {
+  const usuario = await UsuariosProvider.getByMatricula(matricula);  
+  if (usuario instanceof Error || usuario.status === 0) {    
     return res.status(StatusCodes.UNAUTHORIZED).json({
       errors: {
         default: 'Usuario ou senha são inválidos'
@@ -30,7 +30,7 @@ export const signIn = async (req: Request<{}, {}, IBodyProps>, res: Response) =>
     });
   }
 
-  const passwordMatch = await PasswordCrypto.verifyPassword(senha, usuario.senha);
+  const passwordMatch = await PasswordCrypto.verifyPassword(senha, usuario.senha);  
   if (!passwordMatch) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       errors: {

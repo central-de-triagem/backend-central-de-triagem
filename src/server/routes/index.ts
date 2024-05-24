@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { CidadesController, PessoasController, UsuariosController } from '../../controllers';
+import { UsuariosController } from '../../controllers';
 import { ensureAuthenticated } from '../../shared/middleware';
 
 

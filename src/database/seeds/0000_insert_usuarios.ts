@@ -16,7 +16,7 @@ const usuariosIniciais = [
     nome: "Patrick",
     matricula: "p0969657",
     email: "patrickandretjmg@gmail.com",
-    senha: "12345678",
+    senha: "$2a$08$C3RmtiBczBIcw7Fd3Vzm2u/FyHYiMqv4D7fFl7RAuKFIEmqQWQAP2", // senha: 12345678
     perfil: "Coordenador",
     status: 1
   }
