@@ -11,7 +11,10 @@ router.get('/', (req, res)=>{
 
 router.get('/usuarios', ensureAuthenticated, UsuariosController.getAllValidation, UsuariosController.getAll);
 router.get('/usuarios/:id', ensureAuthenticated, UsuariosController.getByIdValidation, UsuariosController.getById);
-router.post('/cadastrar', UsuariosController.signUpValidation, UsuariosController.signUp);
+
+router.post('/cadastrar', ensureAuthenticated, UsuariosController.signUpValidation, UsuariosController.signUp);
+// router.post('/reset-password', ensureAuthenticated, UsuariosController.signInValidation, UsuariosController.signIn);
 router.post('/login', UsuariosController.signInValidation, UsuariosController.signIn);
+// router.post('/forgot-password', UsuariosController.signInValidation, UsuariosController.signIn);
 
 export {router};

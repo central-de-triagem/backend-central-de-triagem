@@ -22,7 +22,17 @@ export const signUpValidation = validation((getSchema) => ({
 }));
 
 export const signUp = async (req: Request<{},{}, IBodyProps>, res: Response) => {
-  const result = await UsuariosProvider.create(req.body);
+  const { roleUsuario } = req.headers
+  
+  if(!roleUsuario || roleUsuario !== "Coordenador") {
+    return res.status(StatusCodes.UNAUTHORIZED).json({
+      errors: {
+        default: 'O usuário não possui permissão'
+      }
+    });
+  }
+
+  const result = await UsuariosProvider.create(req.body); 
 
   if(result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
