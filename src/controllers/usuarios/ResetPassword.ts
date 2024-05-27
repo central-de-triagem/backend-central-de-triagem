@@ -4,7 +4,6 @@ import * as yup from 'yup';
 
 import { validation } from '../../shared/middleware';
 import { UsuariosProvider } from '../../database/providers/usuarios';
-import { JWTService } from '../../shared/services';
 import { IUsuario } from '../../database/models';
 
 
@@ -17,10 +16,10 @@ interface IBodyProps extends Pick<IUsuario, 'senha'>{
   confirmarSenha: string;
 }
 
-export const updateByIdValidation = validation(getSchema => ({
+export const resetPasswordValidation = validation(getSchema => ({
   body: getSchema<IBodyProps>(yup.object().shape({
     senha: yup.string().required().min(6),
-    confirmarSenha: yup.string().required().min(6),
+    confirmarSenha: yup.string().oneOf([yup.ref('senha')], 'As senhas devem ser iguais').required().min(6),
   })),
   query: getSchema<IQueryProps>(yup.object().shape({
     token: yup.string().required(),
@@ -37,24 +36,8 @@ export const resetPassword = async (req: Request<{}, {}, IBodyProps, IQueryProps
     });
   }
 
-  const jwtDataDecoded = JWTService.verify(req.query.token);
-
-  if(jwtDataDecoded === 'JWT_SECRET_NOT_FOUND') {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      errors: {
-        default: 'Erro ao verificar o token'
-      }
-    });
-  }else if(jwtDataDecoded === 'INVALID_TOKEN'){
-    return res.status(StatusCodes.UNAUTHORIZED).json({
-      errors: {
-        default: 'Não autenticado'
-      }
-    });
-  }
-
-  const result = await UsuariosProvider.resetPassword(jwtDataDecoded.uid, req.body);
-
+  const result = await UsuariosProvider.resetPassword(req.query.token, req.body.senha);
+  console.log(result)
   if(result instanceof Error){
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       errors: {
@@ -63,5 +46,5 @@ export const resetPassword = async (req: Request<{}, {}, IBodyProps, IQueryProps
     });
   }
 
-  return res.status(StatusCodes.NO_CONTENT).json(result);
+  return res.status(StatusCodes.ACCEPTED).json(result);
 };

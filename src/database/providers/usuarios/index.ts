@@ -5,6 +5,7 @@ import * as getById from './GetById';
 import * as getByMatricula from './GetByMatricula';
 import * as count from './Count';
 import * as resetPassword from './ResetPassword';
+import * as requestPasswordReset from './RequestPasswordReset';
 
 export const UsuariosProvider = {
   ...create,
@@ -14,4 +15,5 @@ export const UsuariosProvider = {
   ...getByMatricula,
   ...count,
   ...resetPassword,
+  ...requestPasswordReset
 };

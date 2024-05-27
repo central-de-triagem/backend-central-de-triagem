@@ -39,7 +39,7 @@ export const signIn = async (req: Request<{}, {}, IBodyProps>, res: Response) =>
     });
   } else {
 
-    const accessToken = JWTService.sign({uid: usuario.id, urole: usuario.perfil});
+    const accessToken = JWTService.sign({uid: usuario.id, urole: usuario.papel});
 
     if(accessToken === 'JWT_SECRET_NOT_FOUND') {
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

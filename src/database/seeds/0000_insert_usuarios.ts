@@ -6,9 +6,9 @@ export const seed = async(Knex: Knex) => {
 
   if(!Number.isInteger(count) || Number(count) > 0) return;
 
-  const cidadesToInsert = usuariosIniciais.map(usuario => usuario);
+  const usuariosParaInserir = usuariosIniciais.map(usuario => usuario);
 
-  await Knex(ETableNames.usuario).insert(cidadesToInsert);
+  await Knex(ETableNames.usuario).insert(usuariosParaInserir);
 };
 
 const usuariosIniciais = [
@@ -17,7 +17,7 @@ const usuariosIniciais = [
     matricula: "p0969657",
     email: "patrickandretjmg@gmail.com",
     senha: "$2a$08$C3RmtiBczBIcw7Fd3Vzm2u/FyHYiMqv4D7fFl7RAuKFIEmqQWQAP2", // senha: 12345678
-    perfil: "Coordenador",
+    papel: 4,
     status: 1
   }
 ];

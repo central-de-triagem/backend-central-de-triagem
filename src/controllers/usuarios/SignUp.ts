@@ -15,23 +15,13 @@ export const signUpValidation = validation((getSchema) => ({
       matricula: yup.string().required().min(8),
       email: yup.string().required().email().min(5),
       senha: yup.string().required().min(6),
-      perfil: yup.string().required().min(3),
+      papel: yup.number().required(),
       status: yup.number().integer().positive().min(0).max(1).required()
     })
   )
 }));
 
 export const signUp = async (req: Request<{},{}, IBodyProps>, res: Response) => {
-  const { roleUsuario } = req.headers
-  
-  if(!roleUsuario || roleUsuario !== "Coordenador") {
-    return res.status(StatusCodes.UNAUTHORIZED).json({
-      errors: {
-        default: 'O usuário não possui permissão'
-      }
-    });
-  }
-
   const result = await UsuariosProvider.create(req.body); 
 
   if(result instanceof Error) {

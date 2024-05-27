@@ -4,6 +4,6 @@ export interface IUsuario {
   matricula: string;
   email: string;
   senha: string;
-  perfil: string;
+  papel: number;
   status: number;
 }
